@@ -1,0 +1,17 @@
+INSTRUCTIONS
+
+
+PREREQUISITES
+^^^^^^^^^^^^^
+Make sure you can make and install the fann 2.2.0 library first. 
+You are required to have swig and python development files 
+installed. After you compiled the fann library...
+(http://sourceforge.net/projects/fann/files/fann/2.2.0/FANN-2.2.0-Source.zip/download)
+
+
+BUILDING AND INSTALLING USING DISTUTILS (second alternative)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+run the following command
+
+# pip install pyfann
+
