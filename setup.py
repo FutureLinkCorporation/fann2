@@ -67,11 +67,12 @@ def find_swig():
 def build_swig():
     print("running swig")
     swig_bin = find_swig()
-    swig_cmd = [swig_bin,'-c++', '-python','fann2/fann2.i']
+    swig_cmd = [swig_bin, '-c++', '-python', 'fann2/fann2.i']
     subprocess.Popen(swig_cmd).wait()
 
 if "sdist" not in sys.argv:
     build_swig()
+
 
 def hunt_files(root, which):
     return glob.glob(os.path.join(root, which))
@@ -94,7 +95,9 @@ setup(
         "Development Status :: 4 - Beta",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
-        "Programming Language :: Python :: 2.7"
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4"
     ],
     keywords="ANN artificial intelligence FANN2.2.0 bindings".split(' '),
     zip_safe=False,
@@ -109,4 +112,3 @@ setup(
                            ),
                  ]
 )
-
