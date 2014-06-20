@@ -4,6 +4,8 @@ from setuptools import setup, Extension, find_packages
 import glob
 import os
 import sys
+import subprocess
+
 
 NAME = 'fann2'
 VERSION = '1.0.0'
@@ -65,23 +67,18 @@ def find_swig():
 def build_swig():
     print("running swig")
     swig_bin = find_swig()
-    swig_cmd = '%s -c++ -python fann2/fann2.i' % swig_bin
-    print 'Running SWIG before:', swig_cmd
-    os.system(swig_cmd)
+    swig_cmd = [swig_bin,'-c++', '-python','fann2/fann2.i']
+    subprocess.Popen(swig_cmd)
 
 if "sdist" not in sys.argv:
-    # These lines are needed to circumvent a bug in distutils
     build_swig()
-
-# This utility function searches for files
-
 
 def hunt_files(root, which):
     return glob.glob(os.path.join(root, which))
 
 setup(
     name=NAME,
-    description='Fast Artificial Neural Network Library (fann)',
+    description='Fast Artificial Neural Network Library (fann) bindings.',
     long_description=LONG_DESCRIPTION,
     version=VERSION,
     author='Steffen Nissen',
