@@ -68,7 +68,7 @@ def build_swig():
     print("running swig")
     swig_bin = find_swig()
     swig_cmd = [swig_bin,'-c++', '-python','fann2/fann2.i']
-    subprocess.Popen(swig_cmd)
+    subprocess.Popen(swig_cmd).wait()
 
 if "sdist" not in sys.argv:
     build_swig()
