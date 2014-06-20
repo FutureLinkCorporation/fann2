@@ -10,17 +10,8 @@ import subprocess
 NAME = 'fann2'
 VERSION = '1.0.0'
 
-LONG_DESCRIPTION = """\
-    Fast Artificial Neural Network Library (FANN) implements multilayer
-artificial neural networks with support for both fully connected
-and sparsely connected networks. It includes a framework for easy
-handling of training data sets. It is easy to use, versatile, well
-documented, and fast.
-
-FANN 2.2.0 source:
-http://sourceforge.net/projects/fann/files/fann/2.2.0/FANN-2.2.0-Source.zip/download
-
-"""
+with open("README.rst") as f:
+    LONG_DESCRIPTION = f.read()
 
 
 def find_executable(executable, path=None):
