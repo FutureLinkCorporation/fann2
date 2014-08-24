@@ -101,15 +101,30 @@
     $1=&temp;
     num=PySequence_Length($input);
     $1->array_num=num;
-    dim=PySequence_Length(PySequence_GetItem($input,0));
+    
+    PyObject* o0=PySequence_GetItem($input,0);
+    if (!PySequence_Check(o0)) {
+        PyErr_SetString(PyExc_ValueError,"Expected an inner sequence");
+        Py_DECREF(o0);
+        SWIG_fail;
+    }
+    dim=PySequence_Length(o0);
+    Py_DECREF(o0);
+    
     $1->array_len=dim;
     $1->arrays = (T **) calloc(num,sizeof(T*));
   
     for (j = 0; j< num; j++)
     {
         PyObject* o1=PySequence_GetItem($input,j);
-        if ((unsigned int)PySequence_Length(o1) == dim) {
+        if (!PySequence_Check(o1)) {
+            PyErr_SetString(PyExc_ValueError,"Expected an inner sequence");
+            Py_DECREF(o1);
+            SWIG_fail;
+        }
+        if ((unsigned int)PySequence_Length(o1) != dim) {
             PyErr_SetString(PyExc_ValueError,"Size mismatch. All items must be of the same size");
+            Py_DECREF(o1);
             SWIG_fail;
         }
         $1->arrays[j] = (T*) malloc(dim*sizeof(T));
@@ -120,10 +135,12 @@
             } else {
                 PyErr_SetString(PyExc_ValueError,"Sequence elements must be numbers");      
                 Py_DECREF(o);
+                Py_DECREF(o1);
                 SWIG_fail;
             }
             Py_DECREF(o);
         }
+        Py_DECREF(o1);
     }
 }
 %typemap(freearg) templ< T >* {
