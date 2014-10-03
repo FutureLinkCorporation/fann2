@@ -20,6 +20,9 @@ http://sourceforge.net/projects/fann/files/fann/2.2.0/FANN-2.2.0-Source.zip/down
 INSTALLATION
 ============
 
+Before install the fann2 bindings from pip ensure you have the FANN 2.2.0 software
+installed and the libs are accesible in the OS to other softwares.
+
 You can install fann2 from pypi, using either pip or easy_install:
 
 ::
