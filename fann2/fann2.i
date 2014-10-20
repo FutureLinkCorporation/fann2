@@ -63,22 +63,6 @@
         free($1->array);
     }
     if ($1) delete $1;
-  
-}
-
-%typemap(argout)  templ<T>* ARGOUT{
-    // templ* type_map out
-    $result= PyList_New( $1->array_len );
-    for (unsigned int i = 0; i < $1->array_len; i++) 
-    {
-        PyObject *o = SetFunc( (cast) $1->array[i]);
-        PyList_SetItem($result,i,o);
-    }
-    if ($1 && $1->array && $1->can_delete) 
-    {	
-        free($1->array);
-    }
-    if ($1) delete $1;
 }
 
 %enddef
