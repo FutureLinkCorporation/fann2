@@ -10,7 +10,7 @@
     The FANN namespace groups the C++ wrapper definitions */
 namespace FANN
 {
-	
+
     template <typename T>
     class helper_array
     {
@@ -30,7 +30,7 @@ namespace FANN
             unsigned int array_len;
 	    bool can_delete;
     };
-    
+
     template <typename T>
     class helper_array_array
     {
@@ -53,7 +53,7 @@ namespace FANN
             unsigned int array_num;
             bool can_delete;
     };
-	
+
     /* Forward declaration of class neural_net and training_data */
     class Neural_net;
     class Training_data;
@@ -70,7 +70,7 @@ namespace FANN
     {
     public:
         /* Constructor: training_data
-        
+
             Default constructor creates an empty neural net.
             Use <read_train_from_file>, <set_train_data> or <create_train_from_callback> to initialize.
         */
@@ -79,7 +79,7 @@ namespace FANN
         }
 
         /* Constructor: training_data
-        
+
             Copy constructor constructs a copy of the training data.
             Corresponds to the C API <fann_duplicate_train_data> function.
         */
@@ -115,7 +115,7 @@ namespace FANN
             or uses the training data for testing and related functions */
 
         /* Method: get_input
-        
+
             Returns:
                 A pointer to the array of input training data
 
@@ -131,7 +131,7 @@ namespace FANN
             else
             {
                 helper_array_array<fann_type>* ret = new helper_array_array<fann_type>;
-                
+
                 ret->arrays=train_data->input;
                 ret->array_num=train_data->num_data;
                 ret->array_len=train_data->num_input;
@@ -141,7 +141,7 @@ namespace FANN
         }
 
         /* Method: get_output
-        
+
             Returns:
                 A pointer to the array of output training data
 
@@ -158,7 +158,7 @@ namespace FANN
             else
             {
                 helper_array_array<fann_type>* ret = new helper_array_array<fann_type>;
-                
+
                 ret->arrays=train_data->output;
                 ret->array_num=train_data->num_data;
                 ret->array_len=train_data->num_output;
@@ -175,7 +175,7 @@ namespace FANN
             A copy of the data is made so there are no restrictions on the
             allocation of the input/output data and the caller is responsible
             for the deallocation of the data pointed to by input and output.
-            
+
             See also:
                 <get_input>, <get_output>
         */
@@ -183,16 +183,16 @@ namespace FANN
         void set_train_data(helper_array_array< fann_type >* input,
             helper_array_array< fann_type >* output)
         {
-            if (input->array_num!=output->array_num) 
+            if (input->array_num!=output->array_num)
             {
                 std::cerr<<"Error: input and output must have the same dimension!"<<std::endl;
                 return;
             }
             input->can_delete=true;
             output->can_delete=true;
-            
+
 	    training_data::set_train_data(input->array_num, input->array_len, input->arrays, output->array_len, output->arrays);
-        }  
+        }
 
 
     };
@@ -208,7 +208,7 @@ namespace FANN
     {
     public:
         /* Constructor: neural_net
-        
+
             Default constructor creates an empty neural net.
             Use one of the create functions to create the neural network.
 
@@ -247,7 +247,7 @@ namespace FANN
 		        <fann_create_standard>
 
 	        This function appears in FANN >= 2.0.0.
-        */ 
+        */
 
         bool create_standard_array( helper_array<unsigned int>* layers)
         {
@@ -294,14 +294,14 @@ namespace FANN
 
         /* Method: run
 
-	        Will run input through the neural network, returning an array of outputs, the number of which being 
+	        Will run input through the neural network, returning an array of outputs, the number of which being
 	        equal to the number of neurons in the output layer.
 
 	        See also:
 		        <test>, <fann_run>
 
 	        This function appears in FANN >= 1.0.0.
-        */ 
+        */
 
          helper_array<fann_type>* run(helper_array<fann_type> *input)
          {
@@ -324,15 +324,15 @@ namespace FANN
            Train one iteration with a set of inputs, and a set of desired outputs.
            This training is always incremental training (see <FANN::training_algorithm_enum>),
            since only one pattern is presented.
-           
+
            Parameters:
    	        ann - The neural network structure
    	        input - an array of inputs. This array must be exactly <fann_get_num_input> long.
    	        desired_output - an array of desired outputs. This array must be exactly <fann_get_num_output> long.
-           	
+
    	        See also:
    		        <train_on_data>, <train_epoch>, <fann_train>
-           	
+
    	        This function appears in FANN >= 1.0.0.
          */
 
@@ -351,12 +351,12 @@ namespace FANN
            Test with a set of inputs, and a set of desired outputs.
            This operation updates the mean square error, but does not
            change the network in any way.
-           
+
            See also:
    		        <test_data>, <train>, <fann_test>
-           
+
            This function appears in FANN >= 1.0.0.
-        */ 
+        */
 
          helper_array<fann_type>* test(helper_array<fann_type> *input, helper_array<fann_type>* desired_output)
          {
@@ -393,7 +393,7 @@ namespace FANN
             {
                 helper_array<unsigned int>* res= new helper_array<unsigned int>;
                 res->array_len = fann_get_num_layers(ann);
-                res->array = (unsigned int*) malloc(sizeof(unsigned int)* 
+                res->array = (unsigned int*) malloc(sizeof(unsigned int)*
                         res->array_len);
                 res->can_delete = true;
                 fann_get_layer_array(ann, res->array);
@@ -422,7 +422,7 @@ namespace FANN
             {
                 helper_array<unsigned int>* res= new helper_array<unsigned int>;
                 res->array_len = fann_get_num_layers(ann);
-                res->array = (unsigned int*) malloc(sizeof(unsigned int)* 
+                res->array = (unsigned int*) malloc(sizeof(unsigned int)*
                         res->array_len);
                 res->can_delete = true;
                 fann_get_bias_array(ann, res->array);
@@ -435,25 +435,28 @@ namespace FANN
 
         /* Method: get_connection_array
 
-            Get the connections in the network.
-
-            The connections array must be preallocated to at least
-            sizeof(struct fann_connection) * get_total_connections() long.
+            Return the connections in the network.
 
             See also:
                 <fann_get_connection_array>
 
            This function appears in FANN >= 2.1.0
         */
-	
-        void get_connection_array(helper_array<connection> *ARGOUT)
+
+        helper_array<connection>* get_connection_array()
         {
             if (ann != NULL)
             {
-                ARGOUT->array_len = fann_get_total_connections(ann); 
-                ARGOUT->array = (connection*) malloc(sizeof(connection)* 
-                        ARGOUT->array_len);
-                fann_get_connection_array(ann, ARGOUT->array);
+                helper_array<connection>* res= new helper_array<connection>;
+                res->array_len = fann_get_total_connections(ann);
+                res->array = (connection*) malloc(sizeof(connection)*
+                        res->array_len);
+                res->can_delete = true;
+                fann_get_connection_array(ann, res->array);
+                return res;
+            }
+            else {
+                return NULL;
             }
         }
         /* Method: set_weight_array
@@ -484,11 +487,11 @@ namespace FANN
         /* Method: get_cascade_activation_functions
 
            The cascade activation functions array is an array of the different activation functions used by
-           the candidates. 
-           
-           See <get_cascade_num_candidates> for a description of which candidate neurons will be 
+           the candidates.
+
+           See <get_cascade_num_candidates> for a description of which candidate neurons will be
            generated by this array.
-           
+
            See also:
    		        <get_cascade_activation_functions_count>, <set_cascade_activation_functions>,
    		        <FANN::activation_function_enum>
@@ -510,7 +513,7 @@ namespace FANN
            Sets the array of cascade candidate activation functions. The array must be just as long
            as defined by the count.
 
-           See <get_cascade_num_candidates> for a description of which candidate neurons will be 
+           See <get_cascade_num_candidates> for a description of which candidate neurons will be
            generated by this array.
 
            See also:
@@ -535,7 +538,7 @@ namespace FANN
            The cascade activation steepnesses array is an array of the different activation functions used by
            the candidates.
 
-           See <get_cascade_num_candidates> for a description of which candidate neurons will be 
+           See <get_cascade_num_candidates> for a description of which candidate neurons will be
            generated by this array.
 
            The default activation steepnesses is {0.25, 0.50, 0.75, 1.00}
@@ -555,14 +558,14 @@ namespace FANN
                 activation_steepnesses->array = fann_get_cascade_activation_steepnesses(ann);
             }
             return activation_steepnesses;
-        }																
+        }
 
         /* Method: set_cascade_activation_steepnesses
 
            Sets the array of cascade candidate activation steepnesses. The array must be just as long
            as defined by the count.
 
-           See <get_cascade_num_candidates> for a description of which candidate neurons will be 
+           See <get_cascade_num_candidates> for a description of which candidate neurons will be
            generated by this array.
 
            See also:
