@@ -377,12 +377,9 @@ namespace FANN
 
         /* Method: get_layer_array
 
-            Get the number of neurons in each layer in the network.
+            Return the number of neurons in each layer in the network.
 
             Bias is not included so the layers match the create methods.
-
-            The layers array must be preallocated to at least
-            sizeof(unsigned int) * get_num_layers() long.
 
             See also:
                 <fann_get_layer_array>
@@ -390,14 +387,20 @@ namespace FANN
            This function appears in FANN >= 2.1.0
         */
 
-        void get_layer_array(helper_array<unsigned int>* ARGOUT)
+        helper_array<unsigned int>* get_layer_array()
         {
             if (ann != NULL)
             {
-                ARGOUT->array_len = fann_get_num_layers(ann);
-                ARGOUT->array = (unsigned int*) malloc(sizeof(unsigned int)* 
-                        ARGOUT->array_len);
-                fann_get_layer_array(ann, ARGOUT->array);
+                helper_array<unsigned int>* res= new helper_array<unsigned int>;
+                res->array_len = fann_get_num_layers(ann);
+                res->array = (unsigned int*) malloc(sizeof(unsigned int)* 
+                        res->array_len);
+                res->can_delete = true;
+                fann_get_layer_array(ann, res->array);
+                return res;
+            }
+            else {
+                return NULL;
             }
         }
 
@@ -413,14 +416,20 @@ namespace FANN
 
             This function appears in FANN >= 2.1.0
         */
-        void get_bias_array(helper_array<unsigned int>* ARGOUT)
+        helper_array<unsigned int>* get_bias_array()
         {
             if (ann != NULL)
             {
-                ARGOUT->array_len = fann_get_num_layers(ann);
-                ARGOUT->array = (unsigned int*) malloc(sizeof(unsigned int)* 
-                        ARGOUT->array_len);
-                fann_get_bias_array(ann, ARGOUT->array);
+                helper_array<unsigned int>* res= new helper_array<unsigned int>;
+                res->array_len = fann_get_num_layers(ann);
+                res->array = (unsigned int*) malloc(sizeof(unsigned int)* 
+                        res->array_len);
+                res->can_delete = true;
+                fann_get_bias_array(ann, res->array);
+                return res;
+            }
+            else {
+                return NULL;
             }
         }
 
