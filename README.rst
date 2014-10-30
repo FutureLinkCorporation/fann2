@@ -16,6 +16,13 @@ documented, and fast.
 FANN 2.2.0 source:
 http://sourceforge.net/projects/fann/files/fann/2.2.0/FANN-2.2.0-Source.zip/download
 
+Depending on OS, could be required do:
+
+::
+
+    cmake -D CMAKE_INSTALL_PREFIX:PATH=/usr .
+
+For more details see http://leenissen.dk/fann/wp/help/installing-fann/
 
 INSTALLATION
 ============
