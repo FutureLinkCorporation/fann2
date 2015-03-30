@@ -35,13 +35,14 @@ easy_install:
 pypi
 ----
 
-```
-$ pip install fann2
-```
+
+    $ pip install fann2
+    
+
 or
-```
-$ easy_install fann2
-```
+
+
+    $ easy_install fann2
 
 pkgsrc
 ------
@@ -51,7 +52,7 @@ Source installation
 ...................
 
 1. Get and install pkgsrc. See `pkgsrc documentation
-<http://pkgsrc.org/#index4h1>_ for platform-specific information.
+<http://pkgsrc.org/#index4h1>`_. for platform-specific information.
 2. cd ${PKGSRCDIR}/devel/py-fann2
 3. bmake install
 
@@ -60,7 +61,7 @@ From binaries
 .............
 
 1. Get and install pkgsrc. See `pkgsrc quickstart
-<http://pkgsrc.org/#index1h1>_ for platform-specific information.
+<http://pkgsrc.org/#index1h1>`_. for platform-specific information.
 2. pkgin -y install py-fann2
 
 
@@ -68,16 +69,17 @@ USAGE
 =====
 Just 
 
-```
->> from fann2 import libfann 
-```
+
+    >> from fann2 import libfann 
+
 
 and then create libfann.neural_net and libfann.training_data objects
 
-```
->> ann = libfann.neural_net()
->> train_data = libfann.training_data()
-```
+
+    >> ann = libfann.neural_net()
+    
+    >> train_data = libfann.training_data()
+
 
 Look at the examples at the FANN documentation and its C++ bindings for further
 reference.
@@ -94,14 +96,17 @@ full terms and conditions.
 LINKS
 =====
 
-- `fann2 on pypi
-<https://pypi.python.org/pypi/fann2>`_
-- `py-fann2 in pkgsrc
-<http://pkgsrc.se/devel/py-fann2>`_
-- `FANN
-<http://leenissen.dk/fann/>`_
-- `pkgsrc
-<http://pkgsrc.org/>`_
+`fann2 on pypi
+<https://pypi.python.org/pypi/fann2>`_.
+
+`py-fann2 in pkgsrc
+<http://pkgsrc.se/devel/py-fann2>`_.
+
+`FANN
+<http://leenissen.dk/fann/>`_.
+
+`pkgsrc
+<http://pkgsrc.org/>`_.
 
 
 CONTACT
