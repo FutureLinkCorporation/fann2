@@ -53,7 +53,9 @@ Source installation
 
 1. Get and install pkgsrc. See `pkgsrc documentation
 <http://pkgsrc.org/#index4h1>`_. for platform-specific information.
+
 2. cd ${PKGSRCDIR}/devel/py-fann2
+
 3. bmake install
 
 
