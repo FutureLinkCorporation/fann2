@@ -2,7 +2,7 @@
 CHANGELOG
 =========
 
-1.0.6 - 2015-03-27
+1.0.6 - 2015-03-30
 
   * Fixed type/size checking for array of arrays (ksuszka/patch-1).
   * Updated README.
