@@ -51,20 +51,21 @@ pkgsrc
 Source installation
 ...................
 
-1. Get and install pkgsrc. See `pkgsrc documentation
+Get and install pkgsrc. See `pkgsrc documentation
 <http://pkgsrc.org/#index4h1>`_. for platform-specific information.
 
-2. cd ${PKGSRCDIR}/devel/py-fann2
+cd ${PKGSRCDIR}/devel/py-fann2
 
-3. bmake install
+bmake install
 
 
 From binaries
 .............
 
-1. Get and install pkgsrc. See `pkgsrc quickstart
+Get and install pkgsrc. See `pkgsrc quickstart
 <http://pkgsrc.org/#index1h1>`_. for platform-specific information.
-2. pkgin -y install py-fann2
+
+pkgin -y install py-fann2
 
 
 USAGE
