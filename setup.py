@@ -8,7 +8,7 @@ import subprocess
 
 
 NAME = 'fann2'
-VERSION = '1.0.0'
+VERSION = '1.0.6'
 
 with open("README.rst") as f:
     LONG_DESCRIPTION = f.read()
