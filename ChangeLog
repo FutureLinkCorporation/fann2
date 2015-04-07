@@ -1,0 +1,20 @@
+=========
+CHANGELOG
+=========
+
+1.0.7 - 2015-03-31
+
+  * Fixed build for ARM devices
+
+1.0.6 - 2015-03-30
+
+  * Fixed type/size checking for array of arrays (ksuszka/patch-1).
+  * Updated README.
+  * Added ChangeLog.
+
+1.0.0 - 2014-06-20
+
+  * Original python bindings included with FANN 2.1.0beta, updated to include
+    support for python 2.6-3.4.
+  * Added pypi package for these bindings.
+  * Added pkgsrc package for these bindings.
