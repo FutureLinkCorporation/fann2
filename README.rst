@@ -7,7 +7,7 @@ fann2
 =====
 
 Python bindings for Fast Artificial Neural Networks 2.2.0 (FANN >= 2.2.0). These
-are the original python bindings included with FANN 2.1.0beta and updated to
+are the original python bindings included with FANN 2.1.0 beta and updated to
 include support for python 2.6-3.4.
 
 
@@ -15,9 +15,9 @@ DESCRIPTION
 ===========
 
 This is a python binding for Fast Artificial Neural Network Library (FANN >=
-2.2.0) that implements multilayer artificial neural networks with support for
+2.2.0) that implements multi-layer artificial neural networks with support for
 both fully-connected and sparsely-connected networks. It includes a framework
-for easy handling of training data sets. It is easy to use, versatile, well-
+for easily handling training data sets. It is easy to use, versatile, well-
 documented, and fast.
 
 FANN 2.2.0 source
@@ -84,7 +84,7 @@ and then create libfann.neural_net and libfann.training_data objects
     >> train_data = libfann.training_data()
 
 
-Look at the examples at the FANN documentation and its C++ bindings for further
+Look at the examples in the FANN documentation and its C++ bindings for further
 reference.
 
 
