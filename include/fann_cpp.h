@@ -952,15 +952,15 @@ public:
 
 	        This function appears in FANN >= 2.0.0.
         */ 
-        bool create_standard(unsigned int num_layers, ...)
-        {
+        bool create_standard(unsigned int num_layers, ...) {
             va_list layers;
-            unsigned int arr[num_layers];
+            unsigned int* arr= new unsigned int[num_layers];
 
             va_start(layers, num_layers);
             for (unsigned int ii = 0; ii < num_layers; ii++)
                 arr[ii] = va_arg(layers, unsigned int);
             bool status = create_standard_array(num_layers, arr);
+            delete[] arr;
             va_end(layers);
             return status;
         }
@@ -1005,15 +1005,15 @@ public:
 
 	        This function appears in FANN >= 2.0.0.
         */
-        bool create_sparse(float connection_rate, unsigned int num_layers, ...)
-        {
+        bool create_sparse(float connection_rate, unsigned int num_layers, ...) {
             va_list layers;
-            unsigned int arr[num_layers];
+            unsigned int* arr= new unsigned int[num_layers];
 
             va_start(layers, num_layers);
             for (unsigned int ii = 0; ii < num_layers; ii++)
                 arr[ii] = va_arg(layers, unsigned int);
             bool status = create_sparse_array(connection_rate, num_layers, arr);
+            delete[] arr;
             va_end(layers);
             return status;
         }
@@ -1055,15 +1055,15 @@ public:
 
 	        This function appears in FANN >= 2.0.0.
         */ 
-        bool create_shortcut(unsigned int num_layers, ...)
-        {
+        bool create_shortcut(unsigned int num_layers, ...) {
             va_list layers;
-            unsigned int arr[num_layers];
+            unsigned int* arr= new unsigned int[num_layers];
 
             va_start(layers, num_layers);
             for (unsigned int ii = 0; ii < num_layers; ii++)
                 arr[ii] = va_arg(layers, unsigned int);
             bool status = create_shortcut_array(num_layers, arr);
+            delete[] arr;
             va_end(layers);
             return status;
         }
