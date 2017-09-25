@@ -32,6 +32,12 @@ INSTALLATION
 You can install fann2 from pkgsrc or from pypi, using either pip or
 easy_install:
 
+wheels
+------
+
+    $ pip install ${wheel_file}
+
+
 pypi
 ----
 
@@ -67,6 +73,17 @@ Get and install pkgsrc. See `pkgsrc quickstart
 
 pkgin -y install py-fann2
 
+Windows considerations
+----------------------
+
+Source installation
+...................
+
+- Install Visual C++ Build Tools;
+- Install `FANN source code <https://github.com/libfann/fann>`_, using cmake;
+- Copy "fanndouble.lib" from FANN installed files to ${python_libs_directory} as "doublefann.lib";
+- Install swig for Windows (you will need to set an Enviroment Variable for "swig.exe");
+- Run > python setup.py install from PowerShell/Command Prompt.
 
 USAGE
 =====
