@@ -8,7 +8,7 @@ fann2
 
 Python bindings for Fast Artificial Neural Networks 2.2.0 (FANN >= 2.2.0). These
 are the original python bindings included with FANN 2.1.0 beta and updated to
-include support for python 2.6-3.4.
+include support for python 2.6-3.6.
 
 
 DESCRIPTION
