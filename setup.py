@@ -1,11 +1,11 @@
 #!/usr/bin/python
+'''FANN Python bindings setup'''
 
-from setuptools import setup, Extension, find_packages
-import glob
 import os
+import os.path
 import sys
 import subprocess
-
+from setuptools import setup, Extension, find_packages
 
 NAME = 'fann2'
 VERSION = '1.0.7'
@@ -13,13 +13,10 @@ VERSION = '1.0.7'
 with open("README.rst") as f:
     LONG_DESCRIPTION = f.read()
 
-
 def find_executable(executable, path=None):
-    """Try to find 'executable' in the directories listed in 'path' (a
+    '''Try to find 'executable' in the directories listed in 'path' (a
     string listing directories separated by 'os.pathsep'; defaults to
-    os.environ['PATH']).  Returns the complete filename or None if not
-    found
-    """
+    os.environ['PATH']).'''
     if path is None:
         path = os.environ['PATH']
     paths = path.split(os.pathsep)
@@ -40,23 +37,55 @@ def find_executable(executable, path=None):
         if os.path.isfile(execname):
             return execname
         else:
-            for p in paths:
-                f = os.path.join(p, execname)
-                if os.path.isfile(f):
-                    return f
+            for pth in paths:
+                fil = os.path.join(pth, execname)
+                if os.path.isfile(fil):
+                    return fil
     else:
         return None
 
+def find_x(path1):
+    '''Return true if substring is in string for files
+    in specified path'''
+    libs = os.listdir(path1)
+    for lib_dir in libs:
+        if "doublefann" in lib_dir:
+            return True
+
+def find_fann():
+    '''Find doublefann library'''
+    # FANN possible libs directories (as $LD_LIBRARY_PATH), also includes
+    # pkgsrc framework support.
+    if sys.platform == "win32":
+        dirs = sys.path
+        for ver in dirs:
+            if os.path.isdir(ver):
+                if find_x(ver):
+                    return True
+            return True
+        raise Exception("Couldn't find FANN source libs!")
+    else:
+        if sys.platform.startswith('freebsd'):
+            dirs = ['/lib', '/usr/lib', '/usr/pkg/lib']
+        else:
+            dirs = ['/lib', '/usr/lib', '/usr/local/lib', '/usr/pkg/lib']
+        for path in dirs:
+            if find_x(path):
+                return True
+        raise Exception("Couldn't find FANN source libs!")
 
 def find_swig():
+    '''Find SWIG executable path'''
     for executable in ("swig2.0", "swig"):
         if find_executable(executable):
             return executable
-    raise Exception("Couldn't find swig2.0 binary!")
-
+    raise Exception("Couldn't find SWIG binary!")
 
 def build_swig():
-    print("running swig")
+    '''Run SWIG with specified parameters'''
+    print ("Looking for FANN libs...")
+    find_fann()
+    print ("running SWIG...")
     swig_bin = find_swig()
     swig_cmd = [swig_bin, '-c++', '-python', 'fann2/fann2.i']
     subprocess.Popen(swig_cmd).wait()
@@ -64,13 +93,9 @@ def build_swig():
 if "sdist" not in sys.argv:
     build_swig()
 
-
-def hunt_files(root, which):
-    return glob.glob(os.path.join(root, which))
-
 setup(
     name=NAME,
-    description='Fast Artificial Neural Network Library (fann) bindings.',
+    description='Fast Artificial Neural Network Library (FANN) Python bindings.',
     long_description=LONG_DESCRIPTION,
     version=VERSION,
     author='Steffen Nissen',
@@ -100,6 +125,6 @@ setup(
                                          '../include', 'include'],
                            libraries=['doublefann'],
                            define_macros=[("SWIG_COMPILE", None)]
-                           ),
-                 ]
+                          ),
+                ]
 )
