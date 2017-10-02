@@ -8,7 +8,7 @@ fann2
 
 Python bindings for Fast Artificial Neural Networks 2.2.0 (FANN >= 2.2.0). These
 are the original python bindings included with FANN 2.1.0 beta and updated to
-include support for python 2.6-3.4.
+include support for python 2.6-3.6.
 
 
 DESCRIPTION
@@ -31,6 +31,12 @@ INSTALLATION
 
 You can install fann2 from pkgsrc or from pypi, using either pip or
 easy_install:
+
+wheels
+------
+
+    $ pip install ${wheel_file}
+
 
 pypi
 ----
@@ -67,6 +73,17 @@ Get and install pkgsrc. See `pkgsrc quickstart
 
 pkgin -y install py-fann2
 
+Windows considerations
+----------------------
+
+Source installation
+...................
+
+- Install Visual C++ Build Tools;
+- Install `FANN source code <https://github.com/libfann/fann>`_, using cmake;
+- Copy "fanndouble.lib" from FANN installed files to ${python_libs_directory} as "doublefann.lib";
+- Install swig for Windows (you will need to set an Enviroment Variable for "swig.exe");
+- Run > python setup.py install from PowerShell/Command Prompt.
 
 USAGE
 =====

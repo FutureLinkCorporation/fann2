@@ -2,6 +2,14 @@
 CHANGELOG
 =========
 
+1.1.0 - 2017-10-02
+
+  * Fixed build for Windows OS.
+  * Added Windows installation details to README.
+  * Added support for 2.7 - 3.6.
+  * Fixed functions that return arrays and functions that deal with "FANN::connection arrays". Patch by  @troiganto.
+  * Created wheel files for FreeBSD, Windows x64 & Linux (py27 & py36).
+
 1.0.7 - 2015-03-31
 
   * Fixed build for ARM devices
