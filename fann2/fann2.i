@@ -15,7 +15,7 @@
 #include "fann_cpp_subclass.h"
 %}
 
-%define HELPER_ARRAY_TEMPLATE( templ , T, GetFunc, SetFunc, cast) 
+%define HELPER_ARRAY_TEMPLATE( templ , T, GetFunc, SetFunc, cast)
     %typemap(in) templ<T> *  (templ<T> temp){
         // templ<T>* type_map in
         int i;
@@ -35,7 +35,7 @@
             if (PyNumber_Check(o)) {
                 $1->array[i] = (T) GetFunc(o);
             } else {
-                PyErr_SetString(PyExc_ValueError,"Sequence elements must be numbers");      
+                PyErr_SetString(PyExc_ValueError,"Sequence elements must be numbers");
                 Py_DECREF(o);
                 SWIG_fail;
             }
@@ -44,8 +44,8 @@
     }
 %typemap(freearg) templ<T>* {
     // templ<T>* type_map freearg
-    if ($1 && $1->array && $1->can_delete) 
-    {	
+    if ($1 && $1->array && $1->can_delete)
+    {
         free($1->array);
     }
 }
@@ -53,29 +53,13 @@
 %typemap(out) templ<T>* {
     // templ* type_map out
     $result= PyList_New( $1->array_len );
-    for (unsigned int i = 0; i < $1->array_len; i++) 
+    for (unsigned int i = 0; i < $1->array_len; i++)
     {
         PyObject *o = SetFunc( (cast) $1->array[i]);
         PyList_SetItem($result,i,o);
     }
-    if ($1 && $1->array && $1->can_delete) 
-    {	
-        free($1->array);
-    }
-    if ($1) delete $1;
-  
-}
-
-%typemap(argout)  templ<T>* ARGOUT{
-    // templ* type_map out
-    $result= PyList_New( $1->array_len );
-    for (unsigned int i = 0; i < $1->array_len; i++) 
+    if ($1 && $1->array && $1->can_delete)
     {
-        PyObject *o = SetFunc( (cast) $1->array[i]);
-        PyList_SetItem($result,i,o);
-    }
-    if ($1 && $1->array && $1->can_delete) 
-    {	
         free($1->array);
     }
     if ($1) delete $1;
@@ -83,10 +67,10 @@
 
 %enddef
 
-%define HELPER_ARRAY_ARRAY_TEMPLATE(templ, T,  GetFunc, SetFunc, cast) 
+%define HELPER_ARRAY_ARRAY_TEMPLATE(templ, T,  GetFunc, SetFunc, cast)
 %typemap(in) templ< T >* ( templ<T> temp) {
     // templ<T>* type_map
-    unsigned int i;  
+    unsigned int i;
     unsigned int j;
     unsigned int dim;
     unsigned int num;
@@ -101,7 +85,7 @@
     $1=&temp;
     num=PySequence_Length($input);
     $1->array_num=num;
-    
+
     PyObject* o0=PySequence_GetItem($input,0);
     if (!PySequence_Check(o0)) {
         PyErr_SetString(PyExc_ValueError,"Expected an inner sequence");
@@ -110,10 +94,10 @@
     }
     dim=PySequence_Length(o0);
     Py_DECREF(o0);
-    
+
     $1->array_len=dim;
     $1->arrays = (T **) calloc(num,sizeof(T*));
-  
+
     for (j = 0; j< num; j++)
     {
         PyObject* o1=PySequence_GetItem($input,j);
@@ -133,7 +117,7 @@
             if (PyNumber_Check(o)) {
                 $1->arrays[j][i] = (T) GetFunc(o);
             } else {
-                PyErr_SetString(PyExc_ValueError,"Sequence elements must be numbers");      
+                PyErr_SetString(PyExc_ValueError,"Sequence elements must be numbers");
                 Py_DECREF(o);
                 Py_DECREF(o1);
                 SWIG_fail;
@@ -146,10 +130,10 @@
 %typemap(freearg) templ< T >* {
     // templ* type_map freearg
     unsigned int i;
-    if ($1 && $1->arrays && $1->can_delete) 
+    if ($1 && $1->arrays && $1->can_delete)
     {
         for (i=0; i < $1->array_num;++i)
-        	if ($1->arrays[i]) 
+        	if ($1->arrays[i])
                 free($1->arrays[i]);
         free($1->arrays);
     }
@@ -157,11 +141,11 @@
 %typemap(out) templ<T>* {
     // templ* type_map out
     $result= PyList_New( $1->array_num );
-    for (unsigned int j = 0; j < $1->array_num; ++j) 
+    for (unsigned int j = 0; j < $1->array_num; ++j)
     {
         PyObject *l= PyList_New( $1->array_len );
         PyList_SetItem($result,j,l);
-        for (unsigned int i = 0; i < $1->array_len; i++) 
+        for (unsigned int i = 0; i < $1->array_len; i++)
         {
             PyObject *o = SetFunc($1->arrays[j][i] );
             //PyObject *o = SetFunc($1->arrays[i][j] );
@@ -169,10 +153,10 @@
         }
     }
     unsigned int i;
-    if ($1 && $1->arrays && $1->can_delete) 
+    if ($1 && $1->arrays && $1->can_delete)
     {
         for (i=0; i < $1->array_num;++i)
-        	if ($1->arrays[i]) 
+        	if ($1->arrays[i])
                 free($1->arrays[i]);
         free($1->arrays);
     }
@@ -193,6 +177,83 @@ HELPER_ARRAY_TEMPLATE( FANN::helper_array, unsigned int, PyInt_AsLong    , PyInt
 HELPER_ARRAY_TEMPLATE( FANN::helper_array, fann_type   , PyFloat_AsDouble, PyFloat_FromDouble, double );
 
 HELPER_ARRAY_ARRAY_TEMPLATE( FANN::helper_array_array, fann_type   , PyFloat_AsDouble, PyFloat_FromDouble, double );
+
+
+
+// Begin typemap specialization for helper_array<connection>*.
+
+%typemap(in) FANN::helper_array<FANN::connection> *  (FANN::helper_array<FANN::connection> temp){
+    // FANN::helper_array<FANN::connection>* type_map in
+    int i;
+    if (!PySequence_Check($input)) {
+        PyErr_SetString(PyExc_ValueError,"Expected a sequence");
+        SWIG_fail;
+    }
+    if (PySequence_Length($input) == 0) {
+        PyErr_SetString(PyExc_ValueError,"Size mismatch. Expected some elements");
+        SWIG_fail;
+    }
+    $1=&temp;
+    $1->array_len=PySequence_Length($input);
+    $1->array = (FANN::connection *) malloc($1->array_len*sizeof(FANN::connection));
+    for (i = 0; i < PySequence_Length($input); i++) {
+        PyObject *o = PySequence_GetItem($input,i);
+        if (!PySequence_Check(o) || PySequence_Length(o) != 3) {
+            PyErr_SetString(PyExc_ValueError,"Connection must be a sequence of length 3");
+            SWIG_fail;
+        }
+        PyObject *from_neuron = PySequence_GetItem(o,0);
+        PyObject *to_neuron = PySequence_GetItem(o,1);
+        PyObject *weight = PySequence_GetItem(o,2);
+        if (PyInt_Check(from_neuron) && PyInt_Check(to_neuron) &&
+                PyNumber_Check(weight)) {
+            $1->array[i].from_neuron = (unsigned int) PyInt_AsLong(from_neuron);
+            $1->array[i].to_neuron = (unsigned int) PyInt_AsLong(to_neuron);
+            $1->array[i].weight = (fann_type) PyFloat_AsDouble(weight);
+        } else {
+            PyErr_SetString(PyExc_ValueError,"Connection elements must be (int, int, float)");
+            Py_DECREF(from_neuron);
+            Py_DECREF(to_neuron);
+            Py_DECREF(weight);
+            Py_DECREF(o);
+            SWIG_fail;
+        }
+        Py_DECREF(from_neuron);
+        Py_DECREF(to_neuron);
+        Py_DECREF(weight);
+        Py_DECREF(o);
+    }
+}
+
+%typemap(freearg) FANN::helper_array<connection>* {
+    // FANN::helper_array<connection>* type_map freearg
+    if ($1 && $1->array && $1->can_delete)
+    {
+        free($1->array);
+    }
+}
+
+%typemap(out) FANN::helper_array<connection>* {
+    // FANN::helper_array<connection>* type_map out
+    $result= PyList_New( $1->array_len );
+    for (unsigned int i = 0; i < $1->array_len; i++)
+    {
+        PyObject *o = PyTuple_Pack (3,
+                PyInt_FromLong( (long) ($1->array[i].from_neuron)),
+                PyInt_FromLong( (long) ($1->array[i].to_neuron)),
+                PyFloat_FromDouble( (double) ($1->array[i].weight)));
+        PyList_SetItem($result,i,o);
+    }
+    if ($1 && $1->array && $1->can_delete)
+    {
+        free($1->array);
+    }
+    if ($1) delete $1;
+}
+
+// End typemap specialization for helper_array<connection>*.
+
+
 
 %rename(neural_net_parent) FANN::neural_net;
 %rename(neural_net) FANN::Neural_net;
