@@ -8,7 +8,7 @@ import subprocess
 from setuptools import setup, Extension, find_packages
 
 NAME = 'fann2'
-VERSION = '1.0.7'
+VERSION = '1.1.0'
 
 with open("README.rst") as f:
     LONG_DESCRIPTION = f.read()
