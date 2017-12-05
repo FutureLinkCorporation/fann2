@@ -104,9 +104,6 @@ setup(
     maintainer_email='gil@megidish.net & hawk.it@tiscali,it and devel@futurelinkcorporation.com',
     url='https://github.com/FutureLinkCorporation/fann2',
     license='GNU LESSER GENERAL PUBLIC LICENSE (LGPL)',
-    dependency_links=[
-        "http://sourceforge.net/projects/fann/files/fann/2.2.0/FANN-2.2.0-Source.zip/download",
-        "http://www.swig.org/download.html"],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
