@@ -47,6 +47,8 @@ def find_executable(executable, path=None):
 def find_x(path1):
     '''Return true if substring is in string for files
     in specified path'''
+    if not os.path.exists(path1):
+        return False
     libs = os.listdir(path1)
     for lib_dir in libs:
         if "doublefann" in lib_dir:
@@ -68,7 +70,7 @@ def find_fann():
         if sys.platform.startswith('freebsd'):
             dirs = ['/lib', '/usr/lib', '/usr/pkg/lib']
         else:
-            dirs = ['/lib', '/usr/lib', '/usr/local/lib', '/usr/pkg/lib']
+            dirs = [os.environ.get('PREFIX','')+'/lib','/lib', '/usr/lib', '/usr/local/lib', '/usr/pkg/lib']
         for path in dirs:
             if find_x(path):
                 return True
