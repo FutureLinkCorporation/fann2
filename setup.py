@@ -8,7 +8,7 @@ import subprocess
 from setuptools import setup, Extension, find_packages
 
 NAME = 'fann2'
-VERSION = '1.1.0'
+VERSION = '1.1.1'
 
 with open("README.rst") as f:
     LONG_DESCRIPTION = f.read()
@@ -22,15 +22,15 @@ def find_executable(executable, path=None):
     paths = path.split(os.pathsep)
     extlist = ['']
     if os.name == 'os2':
-        (base, ext) = os.path.splitext(executable)
+        ext = os.path.splitext(executable)
         # executable files on OS/2 can have an arbitrary extension, but
         # .exe is automatically appended if no dot is present in the name
         if not ext:
             executable = executable + ".exe"
     elif sys.platform == 'win32':
         pathext = os.environ['PATHEXT'].lower().split(os.pathsep)
-        (base, ext) = os.path.splitext(executable)
-        if ext.lower() not in pathext:
+        ext = os.path.splitext(executable)
+        if ext not in pathext:
             extlist = pathext
     for ext in extlist:
         execname = executable + ext
@@ -41,6 +41,7 @@ def find_executable(executable, path=None):
                 fil = os.path.join(pth, execname)
                 if os.path.isfile(fil):
                     return fil
+            break
     else:
         return None
 
@@ -65,14 +66,12 @@ def find_fann():
             return True
         raise Exception("Couldn't find FANN source libs!")
     else:
-        if sys.platform.startswith('freebsd'):
-            dirs = ['/lib', '/usr/lib', '/usr/pkg/lib']
-        else:
-            dirs = ['/lib', '/usr/lib', '/usr/local/lib', '/usr/pkg/lib']
+        dirs = ['/lib', '/usr/lib', '/usr/lib64', '/usr/local/lib', '/usr/pkg/lib']
         for path in dirs:
-            if find_x(path):
-                return True
-        raise Exception("Couldn't find FANN source libs!")
+            if os.path.isdir(path):
+                if find_x(path):
+                    return True
+            raise Exception("Couldn't find FANN source libs!")
 
 def find_swig():
     '''Find SWIG executable path'''
@@ -83,9 +82,9 @@ def find_swig():
 
 def build_swig():
     '''Run SWIG with specified parameters'''
-    print ("Looking for FANN libs...")
+    print("Looking for FANN libs...")
     find_fann()
-    print ("running SWIG...")
+    print("running SWIG...")
     swig_bin = find_swig()
     swig_cmd = [swig_bin, '-c++', '-python', 'fann2/fann2.i']
     subprocess.Popen(swig_cmd).wait()
@@ -113,7 +112,9 @@ setup(
         "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.3",
-        "Programming Language :: Python :: 3.4"
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6"
     ],
     keywords="ANN artificial intelligence FANN2.2.0 bindings".split(' '),
     zip_safe=False,
