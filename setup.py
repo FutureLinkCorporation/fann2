@@ -8,7 +8,7 @@ import subprocess
 from setuptools import setup, Extension, find_packages
 
 NAME = 'fann2'
-VERSION = '1.1.1'
+VERSION = '1.1.2'
 
 with open("README.rst") as f:
     LONG_DESCRIPTION = f.read()
@@ -63,7 +63,6 @@ def find_fann():
             if os.path.isdir(ver):
                 if find_x(ver):
                     return True
-            return True
         raise Exception("Couldn't find FANN source libs!")
     else:
         dirs = ['/lib', '/usr/lib', '/usr/lib64', '/usr/local/lib', '/usr/pkg/lib']
@@ -71,7 +70,7 @@ def find_fann():
             if os.path.isdir(path):
                 if find_x(path):
                     return True
-            raise Exception("Couldn't find FANN source libs!")
+        raise Exception("Couldn't find FANN source libs!")
 
 def find_swig():
     '''Find SWIG executable path'''
