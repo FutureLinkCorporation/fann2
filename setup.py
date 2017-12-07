@@ -30,7 +30,7 @@ def find_executable(executable, path=None):
     elif sys.platform == 'win32':
         pathext = os.environ['PATHEXT'].lower().split(os.pathsep)
         ext = os.path.splitext(executable)
-        if ext.lower() not in pathext:
+        if ext not in pathext:
             extlist = pathext
     for ext in extlist:
         execname = executable + ext
@@ -68,9 +68,10 @@ def find_fann():
     else:
         dirs = ['/lib', '/usr/lib', '/usr/lib64', '/usr/local/lib', '/usr/pkg/lib']
         for path in dirs:
-            if find_x(path):
-                return True
-        raise Exception("Couldn't find FANN source libs!")
+            if os.path.isdir(path):
+                if find_x(path):
+                    return True
+            raise Exception("Couldn't find FANN source libs!")
 
 def find_swig():
     '''Find SWIG executable path'''
@@ -81,9 +82,9 @@ def find_swig():
 
 def build_swig():
     '''Run SWIG with specified parameters'''
-    print ("Looking for FANN libs...")
+    print("Looking for FANN libs...")
     find_fann()
-    print ("running SWIG...")
+    print("running SWIG...")
     swig_bin = find_swig()
     swig_cmd = [swig_bin, '-c++', '-python', 'fann2/fann2.i']
     subprocess.Popen(swig_cmd).wait()
@@ -111,7 +112,9 @@ setup(
         "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.3",
-        "Programming Language :: Python :: 3.4"
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6"
     ],
     keywords="ANN artificial intelligence FANN2.2.0 bindings".split(' '),
     zip_safe=False,
