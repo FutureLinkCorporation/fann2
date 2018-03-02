@@ -53,25 +53,6 @@ def find_x(path1):
         if "doublefann" in lib_dir:
             return True
 
-def find_fann():
-    '''Find doublefann library'''
-    # FANN possible libs directories (as $LD_LIBRARY_PATH), also includes
-    # pkgsrc framework support.
-    if sys.platform == "win32":
-        dirs = sys.path
-        for ver in dirs:
-            if os.path.isdir(ver):
-                if find_x(ver):
-                    return True
-        raise Exception("Couldn't find FANN source libs!")
-    else:
-        dirs = ['/lib', '/usr/lib', '/usr/lib64', '/usr/local/lib', '/usr/pkg/lib']
-        for path in dirs:
-            if os.path.isdir(path):
-                if find_x(path):
-                    return True
-        raise Exception("Couldn't find FANN source libs!")
-
 def find_swig():
     '''Find SWIG executable path'''
     for executable in ("swig2.0", "swig"):
@@ -81,8 +62,6 @@ def find_swig():
 
 def build_swig():
     '''Run SWIG with specified parameters'''
-    print("Looking for FANN libs...")
-    find_fann()
     print("running SWIG...")
     swig_bin = find_swig()
     swig_cmd = [swig_bin, '-c++', '-python', 'fann2/fann2.i']
