@@ -2,6 +2,17 @@
 CHANGELOG
 =========
 
+1.1.2 - 2017-12-07
+
+  * Fix badly placed return value for nested conditional under FANN libs search function. 
+  * Fixed indentation for raise function under for loop.
+
+1.1.1 - 2017-12-07
+
+  * Added '/usr/lib64' directory to FANN libs search function for setup.py.
+  * Removed unnecessary search block for FreeBSD specifics.
+  * Pylinted setup.py.
+
 1.1.0 - 2017-10-02
 
   * Fixed build for Windows OS.
